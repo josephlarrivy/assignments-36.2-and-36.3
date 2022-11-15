@@ -28,6 +28,9 @@ getMultiple();
 let arr = [];
 async function getMultipleAgain() {
     let resp = await Promise.all(
-    arr.push () => $.getJSON(`${baseUrl}${num}`)
-    )
+    arr.push () => $.getJSON(`${baseUrl}${num}`);
+    facts.forEach(data => {
+        $('body').append(`<p>${data.text}</p>`);
+    });
 }
+getMultipleAgain()

@@ -8,18 +8,18 @@
 
 
 $(function () {
-    let baseUrl = 'https://deckofcardsapi.com/api/deck';
+    let baseUrl = 'https://deckofcardsapi.com/api/deck/';
 
     async function requestOne() {
-        let resp = await $.getJSON(`${baseUrl}/new/draw/`);
+        let resp = await $.getJSON(`${baseUrl}new/draw/`);
         let {suit,value} = resp.cards[0];
         console.log(`${value} of ${suit}`);
     }
 
     async function requestTwo() {
-        let firstCard = await $.getJSON(`${baseUrl}/new/draw/`);
+        let firstCard = await $.getJSON(`${baseUrl}new/draw/`);
         let deckId = firstCard.deck_id;
-        let secondCard = await $.getJSON(`${baseUrl}/${deckId}/draw`);
+        let secondCard = await $.getJSON(`${baseUrl}${deckId}/draw`);
         cardData = [firstCard, secondCard];
         for (data in cardData) {
             let {suit,value} = data.cards;
@@ -31,13 +31,13 @@ $(function () {
         let $button = $('button');
         let $cardArea = $('#card-area');
 
-        let deckData = await $.getJSON(`${baseUrl}/new/shuffle/`);
+        let deckData = await $.getJSON(`${baseUrl}new/shuffle/`);
         $button.show().on('click', async function () {
-            let cardData = await $.getJSON(`${baseUrl}/${deckData.deck_id}/draw/`);
-            let cardSrc = cardData.cards[0].image;
+            let cardData = await $.getJSON(`${baseUrl}${deckData.deck_id}/draw/`);
+            let image = cardData.cards[0].image;
             $cardArea.append(
                 $('<img>', {
-                    src: cardSrc,
+                    src: image,
                 })
             );
             if (cardData.remaining === 0) $button.remove();
